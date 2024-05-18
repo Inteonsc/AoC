@@ -1,6 +1,7 @@
-import re
+import regex as re
 import os
-# this currently doesnt work because twone will output to 22 but it needs to output to 21
+#used to not work because twone will output to 22 but it needs to output to 21 but 3rd party regex + overlapped solves this
+
 data = open(os.path.dirname(os.path.abspath(__file__)) + "\input.txt").readlines()
 runningTotal = 0
 numbers_dict = {
@@ -19,7 +20,7 @@ for i in numbers_dict:
     regexstring += "|" + i
 debug = 0
 for line in data:
-    matches = re.findall(regexstring, line)
+    matches = re.findall(regexstring, line, overlapped = True)
     toAdd = "" 
     if matches[0] in numbers_dict:
         toAdd += str(numbers_dict[matches[0]])
@@ -30,8 +31,4 @@ for line in data:
     else:
         toAdd += matches[-1]
     runningTotal += int(toAdd)
-    debug += 1
-    if debug < 5:
-        print(line + toAdd)
 print(runningTotal)
-print(debug)
